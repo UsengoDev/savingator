@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Savingator - Savings Calculator</title>
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+	<div class="container">
+
+		<h1>Savingator</h1>
+		<p class="subtitle">We will save you from calculation hell.</p>
+
+		<div class="card">
+			<!-- Country Selector at Top -->
+			<label for="country">Select Your Country</label>
+			<select id="country">
+				<option value="">Detecting...</option>
+			</select>
+
+			<label for="goalAmount">Goal Amount (₱)</label>
+			<input type="number" id="goalAmount" placeholder="e.g. 50000" />
+
+			<label for="timeframe">Timeframe</label>
+			<select id="timeframe">
+				<option value="1">1 month</option>
+				<option value="3">3 months</option>
+				<option value="6">6 months</option>
+				<option value="12" selected>12 months</option>
+				<option value="24">24 months</option>
+				<option value="36">36 months</option>
+			</select>
+
+			<label for="frequency">Deposit Frequency</label>
+			<select id="frequency">
+				<option value="365">Daily</option>
+				<option value="52">Weekly</option>
+				<option value="26">Bi-Weekly</option>
+				<option value="12" selected>Monthly</option>
+				<option value="4">Quarterly</option>
+			</select>
+
+			<label for="interestRate">Interest Rate (optional)</label>
+			<input type="number" id="interestRate" placeholder="e.g. 5 (for 5%)" />
+
+			<label for="taxRate">Tax Rate (optional)</label>
+			<input type="number" id="taxRate" placeholder="e.g. 10 (for 10%)" />
+
+			<button id="calculateBtn">Calculate</button>
+		</div>
+
+		<div id="result" class="result-card" style="display:none;">
+			<h2>Results</h2>
+			<div>
+				<p>Required Deposit:</p>
+				<p class="result-value" id="requiredDeposit"></p>
+			</div>
+			<div>
+				<p>Total Saved:</p>
+				<p class="result-value" id="totalSaved"></p>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
