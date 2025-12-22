@@ -1,7 +1,7 @@
 // ===== Country List =====
 const countries = [
 	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"
-	// ... include full list from previous version ...
+	// ... include full list if needed ...
 ];
 
 // ===== Default Interest & Tax Estimates =====
@@ -64,17 +64,10 @@ function detectCountry() {
 	const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	const guess = tzToCountry[tz];
 	const sel = document.getElementById("country");
-
 	if (guess && countries.includes(guess)) {
 		sel.value = guess;
 		applyDefaults(guess);
 	}
-}
-
-// ===== Advanced Section Toggle =====
-function showAdvancedSection() {
-	const section = document.getElementById('advancedSection');
-	section.style.display = 'block';
 }
 
 // ===== Event Listeners =====
@@ -83,17 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const checkbox = document.getElementById("includeInterestTax");
 
-	// Show advanced section and detect country when checkbox is checked
+	// Toggle advanced section when checkbox changes
 	checkbox.addEventListener("change", () => {
-		if (checkbox.checked) {
-			showAdvancedSection();
-			detectCountry();
-		}
-	});
-
-	document.getElementById("advancedToggle").addEventListener("click", () => {
 		const section = document.getElementById('advancedSection');
-		section.style.display = section.style.display === 'none' ? 'block' : 'none';
+		section.style.display = checkbox.checked ? 'block' : 'none';
+		if (checkbox.checked) detectCountry();
 	});
 
 	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);

@@ -1,6 +1,7 @@
 /* ==============================
    Base
 ============================== */
+
 body {
 	margin: 0;
 	padding: 0;
@@ -18,6 +19,7 @@ body {
 /* ==============================
    Headings
 ============================== */
+
 h1 {
 	text-align: center;
 	font-size: 1.75rem;
@@ -33,6 +35,7 @@ p.subtitle {
 /* ==============================
    Card
 ============================== */
+
 .card {
 	background: #fff;
 	padding: 20px;
@@ -59,8 +62,39 @@ input, select {
 }
 
 /* ==============================
+   Timeframe wrapper
+============================== */
+
+.timeframe-wrapper {
+	display: flex;
+	gap: 8px;
+	margin-bottom: 14px;
+}
+
+.timeframe-wrapper select {
+	flex: 1;
+}
+
+/* ==============================
+   Checkbox inline
+============================== */
+
+.checkbox-inline {
+	display: flex;
+	align-items: center;
+	font-size: 0.95rem;
+	cursor: pointer;
+	margin-bottom: 14px;
+}
+
+.checkbox-inline input[type="checkbox"] {
+	margin-right: 6px;
+}
+
+/* ==============================
    Buttons
 ============================== */
+
 button {
 	width: 100%;
 	padding: 12px;
@@ -78,27 +112,9 @@ button:hover {
 }
 
 /* ==============================
-   Advanced Toggle
-============================== */
-.advanced-toggle {
-	background: none;
-	color: #555;
-	border: none;
-	padding: 8px 0;
-	margin-bottom: 10px;
-	font-size: 0.9rem;
-	cursor: pointer;
-	text-align: left;
-}
-
-.advanced-toggle:hover {
-	color: #000;
-	text-decoration: underline;
-}
-
-/* ==============================
    Advanced Section
 ============================== */
+
 #advancedSection {
 	background: #F4F6F8;
 	padding: 12px;
@@ -107,32 +123,9 @@ button:hover {
 }
 
 /* ==============================
-   Checkbox Section
-============================== */
-.checkbox-wrapper {
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	margin: 8px 0 14px 0;
-	font-size: 0.95rem;
-}
-
-/* ==============================
-   Timeframe Flex
-============================== */
-.timeframe-wrapper {
-	display: flex;
-	gap: 8px;
-	margin-bottom: 14px;
-}
-
-.timeframe-wrapper select {
-	flex: 1;
-}
-
-/* ==============================
    Results
 ============================== */
+
 .result-card {
 	background: #fff;
 	padding: 18px;
