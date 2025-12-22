@@ -1,7 +1,6 @@
 // ===== Country List =====
 const countries = [
 	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"
-	// ... include full list if needed ...
 ];
 
 // ===== Default Interest & Tax Estimates =====
@@ -70,22 +69,6 @@ function detectCountry() {
 	}
 }
 
-// ===== Event Listeners =====
-document.addEventListener("DOMContentLoaded", () => {
-	populateCountries();
-
-	const checkbox = document.getElementById("includeInterestTax");
-
-	// Toggle advanced section when checkbox changes
-	checkbox.addEventListener("change", () => {
-		const section = document.getElementById('advancedSection');
-		section.style.display = checkbox.checked ? 'block' : 'none';
-		if (checkbox.checked) detectCountry();
-	});
-
-	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
-});
-
 // ===== Calculator =====
 function calculateSavings() {
 	const goal = parseFloat(document.getElementById("goalAmount").value);
@@ -126,3 +109,28 @@ function calculateSavings() {
 	document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
 	document.getElementById("result").style.display = "block";
 }
+
+// ===== Event Listeners =====
+document.addEventListener("DOMContentLoaded", () => {
+	populateCountries();
+
+	const checkbox = document.getElementById("includeInterestTax");
+
+	// Toggle advanced section when checkbox changes and auto-calculate
+	checkbox.addEventListener("change", () => {
+		const section = document.getElementById('advancedSection');
+		section.style.display = checkbox.checked ? 'block' : 'none';
+		if (checkbox.checked) detectCountry();
+		calculateSavings(); // <-- auto-calculate on toggle
+	});
+
+	// Calculate when pressing button
+	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
+
+	// Optional: recalc if any inputs change
+	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
+	document.getElementById("timeframeNumber").addEventListener("change", calculateSavings);
+	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
+	document.getElementById("interestRate").addEventListener("input", calculateSavings);
+	document.getElementById("taxRate").addEventListener("input", calculateSavings);
+});
