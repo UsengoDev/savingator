@@ -202,3 +202,83 @@ button:hover {
 	text-align: center;
 	color: #333;
 }
+#footer{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 24px;
+}
+
+.footer_links{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer_links a{
+    text-decoration:none;
+    color: #111;
+}
+.our_other_tools{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items:center;
+    font-weight: 700;
+    padding: 34px 0px 60px;
+}
+.our_other_tools a{
+    text-decoration:none;
+    color:black;
+    padding: 24px;
+    max-width: 45vw;
+    overflow: hidden;
+    word-wrap: break-word;
+	overflow-wrap: break-word;
+	white-space: normal;
+}
+.other_tools_title{
+    font-size: 28px;
+    line-height: 64px;
+}
+.online_tool_container{
+    text-align:center;
+}
+.other_tools_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 12%;
+    padding: 24px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.tool_description{
+    font-weight:normal;
+}
+.usengo_site_name{
+    font-weight:700;
+    font-size:3rem;
+}
+.usengo_site_description{
+    font-weight:400;
+}
+
+@media (max-width: 575.98px) {
+    .other_tools_container{
+        flex-direction:column;
+    }
+    .our_other_tools a{
+        width: 100%;
+        max-width: unset;
+    }
+    .other_tools_title{
+        text-align: center;
+        line-height: 1.85rem;
+    }
+}
