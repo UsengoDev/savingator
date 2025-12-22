@@ -79,7 +79,6 @@ function populateCountries() {
 function applyDefaults(country) {
 	const data = defaultParams[country];
 	if (!data) return;
-
 	document.getElementById("interestRate").value = data.interest;
 	document.getElementById("taxRate").value = data.tax;
 }
@@ -113,7 +112,11 @@ function calculateSavings() {
 	const container = document.getElementById("frequencyResults");
 	container.innerHTML = "";
 
+	// Only show frequencies that fit within the timeframe
 	Object.entries(frequencies).forEach(([label, freq]) => {
+		const monthsPerDeposit = 12 / freq; // months per single deposit
+		if (monthsPerDeposit > months) return; // skip if deposit frequency exceeds timeframe
+
 		const periods = years * freq;
 		const deposit = goal / periods / growthFactor;
 		const p = document.createElement("p");
@@ -125,6 +128,7 @@ function calculateSavings() {
 	document.getElementById("result").style.display = "block";
 }
 
+// ===== Init =====
 document.addEventListener("DOMContentLoaded", () => {
 	populateCountries();
 	detectCountry();
