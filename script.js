@@ -77,37 +77,46 @@ function calculateSavings() {
 
 	if (!goal || goal <= 0 || !number || number <= 0) return;
 
-	// Convert timeframe to months
-	let months;
-	switch (unit) {
-		case "days": months = number / 30; break;
-		case "weeks": months = number / 4.345; break;
-		case "months": months = number; break;
-		case "years": months = number * 12; break;
-	}
-
-	const years = months / 12;
-	const includeInterestTax = document.getElementById("includeInterestTax").checked;
-	const interest = includeInterestTax ? parseFloat(document.getElementById("interestRate").value) || 0 : 0;
-	const tax = includeInterestTax ? parseFloat(document.getElementById("taxRate").value) || 0 : 0;
-	const netInterest = interest * (1 - tax / 100);
-	const growthFactor = 1 + (netInterest / 100) * years;
-
+	const resultCard = document.getElementById("result");
 	const container = document.getElementById("frequencyResults");
-	container.innerHTML = "";
 
-	Object.entries(frequencies).forEach(([label, freq]) => {
-		const periodMonths = 12 / freq;
-		if (periodMonths > months) return; // skip frequencies exceeding chosen timeframe
-		const periods = years * freq;
-		const deposit = goal / periods / growthFactor;
-		const p = document.createElement("p");
-		p.innerHTML = `Save <strong>${label}</strong>: ₱${deposit.toFixed(2)}`;
-		container.appendChild(p);
-	});
+	// Show temporary "Calculating..." message
+	container.innerHTML = "<p>Calculating...</p>";
+	resultCard.classList.remove("show");
+	resultCard.style.display = "block";
 
-	document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
-	document.getElementById("result").style.display = "block";
+	setTimeout(() => {
+		// Convert timeframe to months
+		let months;
+		switch (unit) {
+			case "days": months = number / 30; break;
+			case "weeks": months = number / 4.345; break;
+			case "months": months = number; break;
+			case "years": months = number * 12; break;
+		}
+
+		const years = months / 12;
+		const includeInterestTax = document.getElementById("includeInterestTax").checked;
+		const interest = includeInterestTax ? parseFloat(document.getElementById("interestRate").value) || 0 : 0;
+		const tax = includeInterestTax ? parseFloat(document.getElementById("taxRate").value) || 0 : 0;
+		const netInterest = interest * (1 - tax / 100);
+		const growthFactor = 1 + (netInterest / 100) * years;
+
+		container.innerHTML = "";
+
+		Object.entries(frequencies).forEach(([label, freq]) => {
+			const periodMonths = 12 / freq;
+			if (periodMonths > months) return; // skip frequencies exceeding chosen timeframe
+			const periods = years * freq;
+			const deposit = goal / periods / growthFactor;
+			const p = document.createElement("p");
+			p.innerHTML = `Save <strong>${label}</strong>: ₱${deposit.toFixed(2)}`;
+			container.appendChild(p);
+		});
+
+		document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
+		resultCard.classList.add("show"); // fade-in effect
+	}, 150);
 }
 
 // ===== Event Listeners =====
@@ -130,10 +139,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		calculateSavings();
 	});
 
-	// Also calculate when button is clicked
+	// Calculate when button is clicked
 	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 
-	// Optional: auto-calc if goal or timeframe changes
+	// Auto-calc if goal or timeframe changes
 	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
 	document.getElementById("timeframeNumber").addEventListener("change", calculateSavings);
 	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
