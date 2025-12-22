@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// Auto-calc if goal or timeframe changes
 	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
-	document.getElementById("timeframeNumber").addEventListener("change", calculateSavings);
+	document.getElementById("timeframeNumber").addEventListener("input", calculateSavings); // now manual input works
 	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
 	document.getElementById("interestRate").addEventListener("input", calculateSavings);
 	document.getElementById("taxRate").addEventListener("input", calculateSavings);

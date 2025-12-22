@@ -19,14 +19,16 @@
 
 			<label for="timeframe">Timeframe</label>
 			<div class="timeframe-wrapper">
-				<select id="timeframeNumber">
-					<option value="1">1</option>
-					<option value="3">3</option>
-					<option value="6">6</option>
-					<option value="12" selected>12</option>
-					<option value="24">24</option>
-					<option value="36">36</option>
-				</select>
+				<input type="number" id="timeframeNumber" list="timeframeOptions" />
+				<datalist id="timeframeOptions">
+					<option value="1"></option>
+					<option value="3"></option>
+					<option value="6"></option>
+					<option value="12"></option>
+					<option value="24"></option>
+					<option value="36"></option>
+				</datalist>
+
 				<select id="timeframeUnit">
 					<option value="days">Days</option>
 					<option value="weeks">Weeks</option>
