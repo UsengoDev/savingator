@@ -1,17 +1,34 @@
-// ==============================
-// Savingator – Core Logic
-// ==============================
+// ===== Country List =====
+const countries = [
+	"Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda",
+	"Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain",
+	"Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
+	"Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso",
+	"Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic",
+	"Chad","Chile","China","Colombia","Comoros","Congo (Congo-Brazzaville)","Costa Rica",
+	"Croatia","Cuba","Cyprus","Czechia","Democratic Republic of the Congo","Denmark",
+	"Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea",
+	"Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia",
+	"Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau",
+	"Guyana","Haiti","Holy See","Honduras","Hungary","Iceland","India","Indonesia",
+	"Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan",
+	"Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia",
+	"Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia",
+	"Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia",
+	"Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia",
+	"Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea",
+	"North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
+	"Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda",
+	"Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
+	"Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore",
+	"Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain",
+	"Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand",
+	"Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu",
+	"Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan",
+	"Vanuatu","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+];
 
-// ===== Frequencies (outputs, not inputs) =====
-const frequencies = {
-	daily: 365,
-	weekly: 52,
-	biweekly: 26,
-	monthly: 12,
-	yearly: 1
-};
-
-// ===== Country Defaults (light assumptions) =====
+// ===== Default Interest & Tax Estimates =====
 const defaultParams = {
 	"Philippines": { interest: 4, tax: 20 },
 	"United States": { interest: 3, tax: 22 },
@@ -22,24 +39,44 @@ const defaultParams = {
 	"Singapore": { interest: 2, tax: 0 }
 };
 
-// ===== Timezone Guessing =====
+// ===== Timezone Mappings =====
 const tzToCountry = {
 	"Asia/Manila": "Philippines",
 	"America/New_York": "United States",
 	"America/Los_Angeles": "United States",
 	"America/Toronto": "Canada",
 	"Europe/London": "United Kingdom",
+	"Europe/Paris": "France",
 	"Asia/Singapore": "Singapore",
 	"Asia/Kolkata": "India",
 	"Australia/Sydney": "Australia"
 };
 
-// ===== Detect Country Silently =====
-function detectCountry() {
-	const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-	const country = tzToCountry[tz];
-	if (!country) return;
+// ===== Frequencies =====
+const frequencies = {
+	"Daily": 365,
+	"Weekly": 52,
+	"Bi-Weekly": 26,
+	"Monthly": 12,
+	"Quarterly": 4,
+	"Yearly": 1
+};
 
+// ===== Populate Countries =====
+function populateCountries() {
+	const sel = document.getElementById("country");
+	sel.innerHTML = "<option value=''>Auto-detected</option>";
+	countries.forEach(c => {
+		const opt = document.createElement("option");
+		opt.value = c;
+		opt.textContent = c;
+		sel.appendChild(opt);
+	});
+	sel.addEventListener("change", () => applyDefaults(sel.value));
+}
+
+// ===== Apply Defaults =====
+function applyDefaults(country) {
 	const data = defaultParams[country];
 	if (!data) return;
 
@@ -47,39 +84,49 @@ function detectCountry() {
 	document.getElementById("taxRate").value = data.tax;
 }
 
-// ===== Core Calculator =====
+// ===== Detect Country =====
+function detectCountry() {
+	const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+	const guess = tzToCountry[tz];
+	const sel = document.getElementById("country");
+
+	if (guess && countries.includes(guess)) {
+		sel.value = guess;
+		applyDefaults(guess);
+		return;
+	}
+}
+
+// ===== Calculator =====
 function calculateSavings() {
 	const goal = parseFloat(document.getElementById("goalAmount").value);
-	if (!goal || goal <= 0) return;
-
-	const presetMonths = parseFloat(document.getElementById("timeframePreset").value);
-	const customMonths = parseFloat(document.getElementById("timeframeCustom").value);
-	const months = customMonths > 0 ? customMonths : presetMonths;
-
+	const months = parseFloat(document.getElementById("timeframe").value);
 	const interest = parseFloat(document.getElementById("interestRate").value) || 0;
 	const tax = parseFloat(document.getElementById("taxRate").value) || 0;
 
-	const years = months / 12;
+	if (!goal || goal <= 0 || !months || months <= 0) return;
 
-	// Simple, transparent growth model
+	const years = months / 12;
 	const netInterest = interest * (1 - tax / 100);
 	const growthFactor = 1 + (netInterest / 100) * years;
 
-	// Compute deposits for each frequency
-	Object.entries(frequencies).forEach(([key, freq]) => {
+	const container = document.getElementById("frequencyResults");
+	container.innerHTML = "";
+
+	Object.entries(frequencies).forEach(([label, freq]) => {
 		const periods = years * freq;
 		const deposit = goal / periods / growthFactor;
-		document.getElementById(key).innerText = `₱${deposit.toFixed(2)}`;
+		const p = document.createElement("p");
+		p.innerHTML = `Save <strong>${label}</strong>: ₱${deposit.toFixed(2)}`;
+		container.appendChild(p);
 	});
 
-	// Goal is always the final total
 	document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
 	document.getElementById("result").style.display = "block";
 }
 
-// ===== Init =====
 document.addEventListener("DOMContentLoaded", () => {
+	populateCountries();
 	detectCountry();
-	document.getElementById("calculateBtn")
-		.addEventListener("click", calculateSavings);
+	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 });
