@@ -148,7 +148,11 @@ const frequencies = {
 function populateCountries() {
 	const sel = document.getElementById("country");
 	sel.innerHTML = "<option value=''>Auto-detected</option>";
-	countries.forEach(c => {
+	
+	// Sort alphabetically
+	const sortedCountries = countries.slice().sort((a, b) => a.localeCompare(b));
+	
+	sortedCountries.forEach(c => {
 		const opt = document.createElement("option");
 		opt.value = c;
 		opt.textContent = c;
@@ -156,6 +160,7 @@ function populateCountries() {
 	});
 	sel.addEventListener("change", () => applyDefaults(sel.value));
 }
+
 
 // ===== Apply Defaults =====
 function applyDefaults(country) {
