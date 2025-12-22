@@ -97,9 +97,18 @@ function detectCountry() {
 	}
 }
 
+// ===== Format Number with Commas =====
+function formatNumberWithCommas(x) {
+	if (!x) return '';
+	const parts = x.toString().split(".");
+	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return parts.join(".");
+}
+
 // ===== Calculator =====
 function calculateSavings() {
-	const goal = parseFloat(document.getElementById("goalAmount").value);
+	const goalInput = document.getElementById("goalAmount").value.replace(/,/g,'');
+	const goal = parseFloat(goalInput);
 	const months = parseFloat(document.getElementById("timeframe").value);
 	const interest = parseFloat(document.getElementById("interestRate").value) || 0;
 	const tax = parseFloat(document.getElementById("taxRate").value) || 0;
@@ -117,13 +126,24 @@ function calculateSavings() {
 		const periods = years * freq;
 		const deposit = goal / periods / growthFactor;
 		const p = document.createElement("p");
-		p.innerHTML = `Save <strong>${label}</strong>: ₱${deposit.toFixed(2)}`;
+		p.innerHTML = `Save <strong>${label}</strong>: ₱${formatNumberWithCommas(deposit.toFixed(2))}`;
 		container.appendChild(p);
 	});
 
-	document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
+	document.getElementById("totalSaved").innerText = `₱${formatNumberWithCommas(goal.toFixed(2))}`;
 	document.getElementById("result").style.display = "block";
 }
+
+// ===== Add comma formatting while typing =====
+const goalInput = document.getElementById("goalAmount");
+goalInput.addEventListener("input", (e) => {
+	const caretPos = goalInput.selectionStart;
+	let value = goalInput.value.replace(/,/g,'');
+	if (!isNaN(value) && value.length > 0) {
+		goalInput.value = formatNumberWithCommas(value);
+		goalInput.setSelectionRange(caretPos, caretPos);
+	}
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 	populateCountries();
