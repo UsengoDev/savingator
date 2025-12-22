@@ -115,16 +115,23 @@ document.addEventListener("DOMContentLoaded", () => {
 	populateCountries();
 
 	const checkbox = document.getElementById("includeInterestTax");
+	const advancedSection = document.getElementById('advancedSection');
+	let advancedShownOnce = false;
 
-	// When checkbox changes, just calculate (don't hide/show advanced)
+	// When checkbox changes
 	checkbox.addEventListener("change", () => {
-		if (checkbox.checked) detectCountry();
+		// Show advanced section the first time
+		if (checkbox.checked && !advancedShownOnce) {
+			advancedSection.style.display = 'block';
+			detectCountry();
+			advancedShownOnce = true;
+		}
 		calculateSavings(); // auto-calculate
 	});
 
 	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 
-	// Optional: recalc if inputs change
+	// Recalculate if inputs change
 	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
 	document.getElementById("timeframeNumber").addEventListener("change", calculateSavings);
 	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
