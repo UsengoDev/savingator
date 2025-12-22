@@ -1,31 +1,7 @@
 // ===== Country List =====
 const countries = [
-	"Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda",
-	"Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain",
-	"Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia",
-	"Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso",
-	"Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic",
-	"Chad","Chile","China","Colombia","Comoros","Congo (Congo-Brazzaville)","Costa Rica",
-	"Croatia","Cuba","Cyprus","Czechia","Democratic Republic of the Congo","Denmark",
-	"Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea",
-	"Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France","Gabon","Gambia",
-	"Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau",
-	"Guyana","Haiti","Holy See","Honduras","Hungary","Iceland","India","Indonesia",
-	"Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan",
-	"Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia",
-	"Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar","Malawi","Malaysia",
-	"Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia",
-	"Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia",
-	"Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea",
-	"North Macedonia","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea",
-	"Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda",
-	"Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","Samoa","San Marino",
-	"Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore",
-	"Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain",
-	"Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria","Tajikistan","Tanzania","Thailand",
-	"Timor-Leste","Togo","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu",
-	"Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan",
-	"Vanuatu","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"
+	// ... can add more if needed
 ];
 
 // ===== Default Interest & Tax Estimates =====
@@ -37,19 +13,6 @@ const defaultParams = {
 	"Australia": { interest: 2, tax: 15 },
 	"India": { interest: 6, tax: 10 },
 	"Singapore": { interest: 2, tax: 0 }
-};
-
-// ===== Timezone Mappings =====
-const tzToCountry = {
-	"Asia/Manila": "Philippines",
-	"America/New_York": "United States",
-	"America/Los_Angeles": "United States",
-	"America/Toronto": "Canada",
-	"Europe/London": "United Kingdom",
-	"Europe/Paris": "France",
-	"Asia/Singapore": "Singapore",
-	"Asia/Kolkata": "India",
-	"Australia/Sydney": "Australia"
 };
 
 // ===== Frequencies =====
@@ -83,23 +46,24 @@ function applyDefaults(country) {
 	document.getElementById("taxRate").value = data.tax;
 }
 
-// ===== Detect Country =====
-function detectCountry() {
-	const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-	const guess = tzToCountry[tz];
-	const sel = document.getElementById("country");
-
-	if (guess && countries.includes(guess)) {
-		sel.value = guess;
-		applyDefaults(guess);
-		return;
+// ===== Convert timeframe to months =====
+function convertToMonths(number, unit) {
+	switch(unit) {
+		case 'days': return number / 30;   // approx
+		case 'weeks': return number / 4.345; // approx
+		case 'months': return number;
+		case 'years': return number * 12;
+		default: return number;
 	}
 }
 
 // ===== Calculator =====
 function calculateSavings() {
 	const goal = parseFloat(document.getElementById("goalAmount").value);
-	const months = parseFloat(document.getElementById("timeframe").value);
+	const num = parseFloat(document.getElementById("timeframeNumber").value);
+	const unit = document.getElementById("timeframeUnit").value;
+	const months = convertToMonths(num, unit);
+
 	const interest = parseFloat(document.getElementById("interestRate").value) || 0;
 	const tax = parseFloat(document.getElementById("taxRate").value) || 0;
 
@@ -112,11 +76,9 @@ function calculateSavings() {
 	const container = document.getElementById("frequencyResults");
 	container.innerHTML = "";
 
-	// Only show frequencies that fit within the timeframe
 	Object.entries(frequencies).forEach(([label, freq]) => {
-		const monthsPerDeposit = 12 / freq; // months per single deposit
-		if (monthsPerDeposit > months) return; // skip if deposit frequency exceeds timeframe
-
+		const monthsPerDeposit = 12 / freq;
+		if (monthsPerDeposit > months) return; // skip if deposit interval exceeds timeframe
 		const periods = years * freq;
 		const deposit = goal / periods / growthFactor;
 		const p = document.createElement("p");
@@ -131,6 +93,5 @@ function calculateSavings() {
 // ===== Init =====
 document.addEventListener("DOMContentLoaded", () => {
 	populateCountries();
-	detectCountry();
 	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 });

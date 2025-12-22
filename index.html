@@ -17,16 +17,28 @@
 			<label for="goalAmount">Goal Amount</label>
 			<input type="number" id="goalAmount" placeholder="e.g. 50000" />
 
-			<label for="timeframe">Timeframe (months)</label>
-			<input list="timeframeOptions" id="timeframe" placeholder="e.g. 12" />
-			<datalist id="timeframeOptions">
-				<option value="1">1 month</option>
-				<option value="3">3 months</option>
-				<option value="6">6 months</option>
-				<option value="12">12 months</option>
-				<option value="24">24 months</option>
-				<option value="36">36 months</option>
-			</datalist>
+			<label for="timeframe">Timeframe</label>
+			<div style="display:flex; gap:8px;">
+				<select id="timeframeNumber">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5" selected>5</option>
+					<option value="6">6</option>
+					<option value="12">12</option>
+					<option value="24">24</option>
+					<option value="36">36</option>
+					<option value="48">48</option>
+					<option value="60">60</option>
+				</select>
+				<select id="timeframeUnit">
+					<option value="days">Days</option>
+					<option value="weeks">Weeks</option>
+					<option value="months" selected>Months</option>
+					<option value="years">Years</option>
+				</select>
+			</div>
 
 			<button type="button" class="advanced-toggle" id="advancedToggle">
 				Advanced assumptions
