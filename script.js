@@ -119,7 +119,7 @@ function calculateSavings() {
 	document.getElementById("totalLabel").innerText = `Total in ${timeframeText}:`;
 
 	document.getElementById("requiredDeposit").innerText = `₱${deposit.toFixed(2)}`;
-	document.getElementById("totalSaved").innerText = `₱${(deposit * totalPeriods).toFixed(2)}`;
+	document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
 
 	document.getElementById("result").style.display = "block";
 }
