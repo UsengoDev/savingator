@@ -113,34 +113,30 @@ function calculateSavings() {
 // ===== Event Listeners =====
 document.addEventListener("DOMContentLoaded", () => {
 	populateCountries();
+	detectCountry();
 
 	const checkbox = document.getElementById("includeInterestTax");
-	const label = document.querySelector(".checkbox-inline");
-	const advancedSection = document.getElementById('advancedSection');
-	let advancedShownOnce = false;
+	const advancedSection = document.getElementById("advancedSection");
 
-	// Toggle advanced section when label is clicked
-	label.addEventListener("click", (e) => {
-
-		// prevent checkbox toggling
-		if (e.target.tagName !== "INPUT") {
+	// Show advanced section first time and detect country
+	let advancedShown = false;
+	checkbox.addEventListener("change", () => {
+		if (!advancedShown) {
 			advancedSection.style.display = 'block';
-			if (!advancedShownOnce) {
-				detectCountry();
-				advancedShownOnce = true;
-			}
+			detectCountry();
+			advancedShown = true;
 		}
-		calculateSavings(); // auto-calculate
+		// Auto-calculate on every check/uncheck
+		calculateSavings();
 	});
 
-	// Also recalc when checkbox itself changes
-	checkbox.addEventListener("change", calculateSavings);
+	// Also calculate when button is clicked
+	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 
-	// Recalculate if inputs change
+	// Optional: auto-calc if goal or timeframe changes
 	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
 	document.getElementById("timeframeNumber").addEventListener("change", calculateSavings);
 	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
 	document.getElementById("interestRate").addEventListener("input", calculateSavings);
 	document.getElementById("taxRate").addEventListener("input", calculateSavings);
-	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 });
