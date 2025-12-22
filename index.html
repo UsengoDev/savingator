@@ -36,12 +36,10 @@
 				<option value="4">Quarterly</option>
 			</select>
 
-			<!-- Advanced Options Toggle -->
 			<button type="button" class="advanced-toggle" id="advancedToggle">
 				Advanced assumptions
 			</button>
 
-			<!-- Advanced Section -->
 			<div id="advancedSection" style="display:none;">
 
 				<label for="country">Country (auto-detected)</label>
@@ -62,14 +60,12 @@
 
 		<div id="result" class="result-card" style="display:none;">
 			<h2>Results</h2>
-			<div>
-				<p>Required Deposit:</p>
-				<p class="result-value" id="requiredDeposit"></p>
-			</div>
-			<div>
-				<p>Total Saved:</p>
-				<p class="result-value" id="totalSaved"></p>
-			</div>
+
+			<p class="result-label" id="saveLabel"></p>
+			<p class="result-value" id="requiredDeposit"></p>
+
+			<p class="result-label" id="totalLabel"></p>
+			<p class="result-value" id="totalSaved"></p>
 		</div>
 
 	</div>

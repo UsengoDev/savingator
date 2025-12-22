@@ -72,14 +72,11 @@ function applyDefaults(country) {
 	const data = defaultParams[country];
 	if (!data) return;
 
-	const interestInput = document.getElementById("interestRate");
-	const taxInput = document.getElementById("taxRate");
-
-	interestInput.value = data.interest;
-	taxInput.value = data.tax;
+	document.getElementById("interestRate").value = data.interest;
+	document.getElementById("taxRate").value = data.tax;
 }
 
-// ===== Detect Country Silently =====
+// ===== Detect Country =====
 function detectCountry() {
 	const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
 	const guess = tzToCountry[tz];
@@ -90,19 +87,10 @@ function detectCountry() {
 		applyDefaults(guess);
 		return;
 	}
-
-	fetch("https://ipapi.co/json/")
-		.then(res => res.json())
-		.then(data => {
-			if (countries.includes(data.country_name)) {
-				sel.value = data.country_name;
-				applyDefaults(data.country_name);
-			}
-		})
-		.catch(() => {});
 }
 
 // ===== Calculator =====
+
 function calculateSavings() {
 	const goal = parseFloat(document.getElementById("goalAmount").value);
 	const months = parseFloat(document.getElementById("timeframe").value);
@@ -116,21 +104,4 @@ function calculateSavings() {
 	let deposit = goal / totalPeriods;
 
 	if (interest > 0) {
-		const factor = 1 + (interest / 100) * (months / 12);
-		deposit /= factor;
-	}
-
-	if (tax > 0) {
-		deposit /= (1 - tax / 100);
-	}
-
-	document.getElementById("requiredDeposit").innerText = `₱${deposit.toFixed(2)}`;
-	document.getElementById("totalSaved").innerText = `₱${(deposit * totalPeriods).toFixed(2)}`;
-	document.getElementById("result").style.display = "block";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-	populateCountries();
-	detectCountry();
-	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
-});
+		const factor = 1 +
