@@ -116,18 +116,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const checkbox = document.getElementById("includeInterestTax");
 
-	// Toggle advanced section when checkbox changes and auto-calculate
+	// When checkbox changes, just calculate (don't hide/show advanced)
 	checkbox.addEventListener("change", () => {
-		const section = document.getElementById('advancedSection');
-		section.style.display = checkbox.checked ? 'block' : 'none';
 		if (checkbox.checked) detectCountry();
-		calculateSavings(); // <-- auto-calculate on toggle
+		calculateSavings(); // auto-calculate
 	});
 
-	// Calculate when pressing button
 	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 
-	// Optional: recalc if any inputs change
+	// Optional: recalc if inputs change
 	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
 	document.getElementById("timeframeNumber").addEventListener("change", calculateSavings);
 	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
