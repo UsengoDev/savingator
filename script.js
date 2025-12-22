@@ -104,4 +104,28 @@ function calculateSavings() {
 	let deposit = goal / totalPeriods;
 
 	if (interest > 0) {
-		const factor = 1 +
+		const factor = 1 + (interest / 100) * (months / 12);
+		deposit /= factor;
+	}
+
+	if (tax > 0) {
+		deposit /= (1 - tax / 100);
+	}
+
+	const frequencyText = document.getElementById("frequency").selectedOptions[0].text;
+	const timeframeText = document.getElementById("timeframe").selectedOptions[0].text;
+
+	document.getElementById("saveLabel").innerText = `Save ${frequencyText}:`;
+	document.getElementById("totalLabel").innerText = `Total in ${timeframeText}:`;
+
+	document.getElementById("requiredDeposit").innerText = `₱${deposit.toFixed(2)}`;
+	document.getElementById("totalSaved").innerText = `₱${(deposit * totalPeriods).toFixed(2)}`;
+
+	document.getElementById("result").style.display = "block";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+	populateCountries();
+	detectCountry();
+	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
+});
