@@ -36,7 +36,10 @@ body {
     color:#111;
     max-width:500px;
 }
-
+.subtitle_main{
+    font-weight: 700;
+    font-size: 1.3rem;
+}
 .container {
 	max-width: 480px;
 	margin: 40px auto;
@@ -53,7 +56,7 @@ h1 {
 	margin-bottom: 8px;
 }
 
-p.subtitle {
+div.subtitle {
 	text-align: center;
 	color: #555;
 	margin-bottom: 24px;
