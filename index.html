@@ -15,67 +15,72 @@
 		<div class="card">
 
 			<label for="goalAmount">Goal Amount</label>
-			<input type="number" id="goalAmount" placeholder="e.g. 50000" />
+			<input type="number" id="goalAmount" placeholder="e.g. 1000000" />
 
-			<label for="timeframe">Timeframe</label>
-			<select id="timeframe">
-				<option value="1">1 month</option>
-				<option value="3">3 months</option>
-				<option value="6">6 months</option>
-				<option value="12" selected>12 months</option>
-				<option value="24">24 months</option>
-				<option value="36">36 months</option>
+			<label for="timeframePreset">Timeframe</label>
+			<select id="timeframePreset">
+				<option value="12">1 year</option>
+				<option value="24">2 years</option>
+				<option value="36">3 years</option>
+				<option value="60" selected>5 years</option>
+				<option value="120">10 years</option>
 			</select>
 
-			<label for="frequency">Deposit Frequency</label>
-			<select id="frequency">
-				<option value="365">Daily</option>
-				<option value="52">Weekly</option>
-				<option value="26">Bi-Weekly</option>
-				<option value="12" selected>Monthly</option>
-				<option value="4">Quarterly</option>
-			</select>
+			<label for="timeframeCustom">Or enter custom months</label>
+			<input type="number" id="timeframeCustom" placeholder="e.g. 84" />
 
 			<button type="button" class="advanced-toggle" id="advancedToggle">
 				Advanced assumptions
 			</button>
 
 			<div id="advancedSection" style="display:none;">
-
 				<label for="country">Country (auto-detected)</label>
 				<select id="country">
 					<option value="">Detecting...</option>
 				</select>
 
 				<label for="interestRate">Interest Rate (%)</label>
-				<input type="number" id="interestRate" placeholder="Auto-filled, editable" />
+				<input type="number" id="interestRate" />
 
 				<label for="taxRate">Tax on Interest (%)</label>
-				<input type="number" id="taxRate" placeholder="Auto-filled, editable" />
-
+				<input type="number" id="taxRate" />
 			</div>
 
 			<button id="calculateBtn">Calculate</button>
 		</div>
 
 		<div id="result" class="result-card" style="display:none;">
-			<h2>Results</h2>
+			<h2>How much you need to save</h2>
 
-			<p class="result-label" id="saveLabel"></p>
-			<p class="result-value" id="requiredDeposit"></p>
+			<div class="result-row">
+				<span>Daily</span><span id="daily"></span>
+			</div>
+			<div class="result-row">
+				<span>Weekly</span><span id="weekly"></span>
+			</div>
+			<div class="result-row">
+				<span>Bi-weekly</span><span id="biweekly"></span>
+			</div>
+			<div class="result-row">
+				<span>Monthly</span><span id="monthly"></span>
+			</div>
+			<div class="result-row">
+				<span>Yearly</span><span id="yearly"></span>
+			</div>
 
-			<p class="result-label" id="totalLabel"></p>
-			<p class="result-value" id="totalSaved"></p>
+			<p class="total-line">
+				Total after timeframe: <strong id="totalSaved"></strong>
+			</p>
 		</div>
 
 	</div>
 
 	<script src="script.js"></script>
 	<script>
-		document.getElementById('advancedToggle').addEventListener('click', function () {
-			const section = document.getElementById('advancedSection');
-			section.style.display = section.style.display === 'none' ? 'block' : 'none';
-		});
+		document.getElementById('advancedToggle').onclick = () => {
+			const s = document.getElementById('advancedSection');
+			s.style.display = s.style.display === 'none' ? 'block' : 'none';
+		};
 	</script>
 </body>
 </html>

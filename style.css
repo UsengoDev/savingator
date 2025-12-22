@@ -1,3 +1,7 @@
+/* ==============================
+   Base
+============================== */
+
 body {
 	margin: 0;
 	padding: 0;
@@ -12,6 +16,10 @@ body {
 	padding: 0 20px;
 }
 
+/* ==============================
+   Headings
+============================== */
+
 h1 {
 	text-align: center;
 	font-size: 1.75rem;
@@ -23,6 +31,10 @@ p.subtitle {
 	color: #555;
 	margin-bottom: 24px;
 }
+
+/* ==============================
+   Card
+============================== */
 
 .card {
 	background: #fff;
@@ -46,7 +58,12 @@ input, select {
 	font-size: 1rem;
 	border: 1px solid #CCCCCC;
 	border-radius: 6px;
+	box-sizing: border-box;
 }
+
+/* ==============================
+   Buttons
+============================== */
 
 button {
 	width: 100%;
@@ -64,7 +81,10 @@ button:hover {
 	background: #218838;
 }
 
-/* Advanced toggle */
+/* ==============================
+   Advanced Toggle
+============================== */
+
 .advanced-toggle {
 	background: none;
 	color: #555;
@@ -81,13 +101,20 @@ button:hover {
 	text-decoration: underline;
 }
 
-/* Advanced section */
+/* ==============================
+   Advanced Section
+============================== */
+
 #advancedSection {
 	background: #F4F6F8;
 	padding: 12px;
 	border-radius: 6px;
 	margin-bottom: 14px;
 }
+
+/* ==============================
+   Results
+============================== */
 
 .result-card {
 	background: #fff;
@@ -98,13 +125,27 @@ button:hover {
 }
 
 .result-card h2 {
-	margin: 0 0 8px;
+	margin: 0 0 12px;
 	font-size: 1.3rem;
 	color: #28A745;
+	text-align: center;
 }
 
-.result-value {
-	font-size: 1.6rem;
-	font-weight: bold;
-	color: #2B2B2B;
+.result-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px 0;
+	font-size: 1rem;
+	border-bottom: 1px solid #eee;
+}
+
+.result-row:last-child {
+	border-bottom: none;
+}
+
+.total-line {
+	margin-top: 16px;
+	font-size: 1.05rem;
+	text-align: center;
+	color: #333;
 }
