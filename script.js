@@ -1,20 +1,3 @@
-// ===== Country List =====
-const countries = [
-	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"
-	// ... can add more if needed
-];
-
-// ===== Default Interest & Tax Estimates =====
-const defaultParams = {
-	"Philippines": { interest: 4, tax: 20 },
-	"United States": { interest: 3, tax: 22 },
-	"United Kingdom": { interest: 2, tax: 20 },
-	"Canada": { interest: 2, tax: 15 },
-	"Australia": { interest: 2, tax: 15 },
-	"India": { interest: 6, tax: 10 },
-	"Singapore": { interest: 2, tax: 0 }
-};
-
 // ===== Frequencies =====
 const frequencies = {
 	"Daily": 365,
@@ -23,6 +6,18 @@ const frequencies = {
 	"Monthly": 12,
 	"Quarterly": 4,
 	"Yearly": 1
+};
+
+// ===== Country Defaults (Optional) =====
+const countries = ["Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"];
+const defaultParams = {
+	"Philippines": { interest: 4, tax: 20 },
+	"United States": { interest: 3, tax: 22 },
+	"United Kingdom": { interest: 2, tax: 20 },
+	"Canada": { interest: 2, tax: 15 },
+	"Australia": { interest: 2, tax: 15 },
+	"India": { interest: 6, tax: 10 },
+	"Singapore": { interest: 2, tax: 0 }
 };
 
 // ===== Populate Countries =====
@@ -49,8 +44,8 @@ function applyDefaults(country) {
 // ===== Convert timeframe to months =====
 function convertToMonths(number, unit) {
 	switch(unit) {
-		case 'days': return number / 30;   // approx
-		case 'weeks': return number / 4.345; // approx
+		case 'days': return number / 30;
+		case 'weeks': return number / 4.345;
 		case 'months': return number;
 		case 'years': return number * 12;
 		default: return number;
@@ -64,8 +59,12 @@ function calculateSavings() {
 	const unit = document.getElementById("timeframeUnit").value;
 	const months = convertToMonths(num, unit);
 
-	const interest = parseFloat(document.getElementById("interestRate").value) || 0;
-	const tax = parseFloat(document.getElementById("taxRate").value) || 0;
+	const includeTaxInterest = document.getElementById("includeTaxInterest").checked;
+	let interest = 0, tax = 0;
+	if (includeTaxInterest) {
+		interest = parseFloat(document.getElementById("interestRate").value) || 0;
+		tax = parseFloat(document.getElementById("taxRate").value) || 0;
+	}
 
 	if (!goal || goal <= 0 || !months || months <= 0) return;
 
