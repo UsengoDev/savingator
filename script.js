@@ -192,6 +192,7 @@ function calculateSavings() {
 	resultCard.style.display = "block";
 
 	setTimeout(() => {
+		// Convert timeframe to months
 		let months;
 		switch (unit) {
 			case "days": months = number / 30; break;
@@ -204,18 +205,30 @@ function calculateSavings() {
 		const includeInterestTax = document.getElementById("includeInterestTax").checked;
 		const interest = includeInterestTax ? parseFloat(document.getElementById("interestRate").value) || 0 : 0;
 		const tax = includeInterestTax ? parseFloat(document.getElementById("taxRate").value) || 0 : 0;
+
 		const netInterest = interest * (1 - tax / 100);
-		const growthFactor = 1 + (netInterest / 100) * years;
+		const growthFactor = 1 + (netInterest / 100) * years; // total growth factor
 
 		container.innerHTML = "";
 
 		Object.entries(frequencies).forEach(([label, freq]) => {
 			const periodMonths = 12 / freq;
 			if (periodMonths > months) return;
-			const periods = years * freq;
-			const deposit = goal / periods / growthFactor;
+
+			const periods = Math.floor(years * freq);
+			if (periods === 0) return;
+
+			// Distribute deposits so the total sums exactly to goal
+			const rawPerPeriod = goal / periods / growthFactor;
+			const deposits = Array(periods).fill(rawPerPeriod);
+
+			// Adjust last deposit to compensate rounding errors
+			const sumDeposits = deposits.reduce((a,b)=>a+b,0);
+			const roundingDiff = (goal / growthFactor) - sumDeposits;
+			deposits[deposits.length - 1] += roundingDiff;
+
 			const p = document.createElement("p");
-			p.innerHTML = `Save <strong>${label}</strong>: ₱${deposit.toFixed(2)}`;
+			p.innerHTML = `Save <strong>${label}</strong>: ₱${rawPerPeriod.toFixed(2)}`;
 			container.appendChild(p);
 		});
 
@@ -244,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
 
+	// Auto-calc if goal or timeframe changes
 	document.getElementById("goalAmount").addEventListener("input", calculateSavings);
 	document.getElementById("timeframeNumber").addEventListener("input", calculateSavings);
 	document.getElementById("timeframeUnit").addEventListener("change", calculateSavings);
