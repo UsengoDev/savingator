@@ -1,7 +1,7 @@
 // ===== Country List =====
 const countries = [
-	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore",
-	// ... keep the full list from previous code ...
+	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"
+	// ... include full list from previous version ...
 ];
 
 // ===== Default Interest & Tax Estimates =====
@@ -68,21 +68,22 @@ function detectCountry() {
 	if (guess && countries.includes(guess)) {
 		sel.value = guess;
 		applyDefaults(guess);
-		return;
 	}
 }
 
-// ===== Advanced Toggle Logic =====
+// ===== Advanced Section Toggle =====
 function showAdvancedSection() {
 	const section = document.getElementById('advancedSection');
 	section.style.display = 'block';
 }
 
-// ===== Checkbox Logic =====
+// ===== Event Listeners =====
 document.addEventListener("DOMContentLoaded", () => {
 	populateCountries();
+
 	const checkbox = document.getElementById("includeInterestTax");
 
+	// Show advanced section and detect country when checkbox is checked
 	checkbox.addEventListener("change", () => {
 		if (checkbox.checked) {
 			showAdvancedSection();
