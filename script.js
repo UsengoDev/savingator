@@ -1,15 +1,10 @@
-// ===== Frequencies =====
-const frequencies = {
-	"Daily": 365,
-	"Weekly": 52,
-	"Bi-Weekly": 26,
-	"Monthly": 12,
-	"Quarterly": 4,
-	"Yearly": 1
-};
+// ===== Country List =====
+const countries = [
+	"Philippines","United States","United Kingdom","Canada","Australia","India","Singapore",
+	// ... keep the full list from previous code ...
+];
 
-// ===== Country Defaults (Optional) =====
-const countries = ["Philippines","United States","United Kingdom","Canada","Australia","India","Singapore"];
+// ===== Default Interest & Tax Estimates =====
 const defaultParams = {
 	"Philippines": { interest: 4, tax: 20 },
 	"United States": { interest: 3, tax: 22 },
@@ -18,6 +13,29 @@ const defaultParams = {
 	"Australia": { interest: 2, tax: 15 },
 	"India": { interest: 6, tax: 10 },
 	"Singapore": { interest: 2, tax: 0 }
+};
+
+// ===== Timezone Mappings =====
+const tzToCountry = {
+	"Asia/Manila": "Philippines",
+	"America/New_York": "United States",
+	"America/Los_Angeles": "United States",
+	"America/Toronto": "Canada",
+	"Europe/London": "United Kingdom",
+	"Europe/Paris": "France",
+	"Asia/Singapore": "Singapore",
+	"Asia/Kolkata": "India",
+	"Australia/Sydney": "Australia"
+};
+
+// ===== Frequencies =====
+const frequencies = {
+	"Daily": 365,
+	"Weekly": 52,
+	"Bi-Weekly": 26,
+	"Monthly": 12,
+	"Quarterly": 4,
+	"Yearly": 1
 };
 
 // ===== Populate Countries =====
@@ -41,34 +59,66 @@ function applyDefaults(country) {
 	document.getElementById("taxRate").value = data.tax;
 }
 
-// ===== Convert timeframe to months =====
-function convertToMonths(number, unit) {
-	switch(unit) {
-		case 'days': return number / 30;
-		case 'weeks': return number / 4.345;
-		case 'months': return number;
-		case 'years': return number * 12;
-		default: return number;
+// ===== Detect Country =====
+function detectCountry() {
+	const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+	const guess = tzToCountry[tz];
+	const sel = document.getElementById("country");
+
+	if (guess && countries.includes(guess)) {
+		sel.value = guess;
+		applyDefaults(guess);
+		return;
 	}
 }
+
+// ===== Advanced Toggle Logic =====
+function showAdvancedSection() {
+	const section = document.getElementById('advancedSection');
+	section.style.display = 'block';
+}
+
+// ===== Checkbox Logic =====
+document.addEventListener("DOMContentLoaded", () => {
+	populateCountries();
+	const checkbox = document.getElementById("includeInterestTax");
+
+	checkbox.addEventListener("change", () => {
+		if (checkbox.checked) {
+			showAdvancedSection();
+			detectCountry();
+		}
+	});
+
+	document.getElementById("advancedToggle").addEventListener("click", () => {
+		const section = document.getElementById('advancedSection');
+		section.style.display = section.style.display === 'none' ? 'block' : 'none';
+	});
+
+	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
+});
 
 // ===== Calculator =====
 function calculateSavings() {
 	const goal = parseFloat(document.getElementById("goalAmount").value);
-	const num = parseFloat(document.getElementById("timeframeNumber").value);
+	const number = parseFloat(document.getElementById("timeframeNumber").value);
 	const unit = document.getElementById("timeframeUnit").value;
-	const months = convertToMonths(num, unit);
 
-	const includeTaxInterest = document.getElementById("includeTaxInterest").checked;
-	let interest = 0, tax = 0;
-	if (includeTaxInterest) {
-		interest = parseFloat(document.getElementById("interestRate").value) || 0;
-		tax = parseFloat(document.getElementById("taxRate").value) || 0;
+	if (!goal || goal <= 0 || !number || number <= 0) return;
+
+	// Convert timeframe to months
+	let months;
+	switch (unit) {
+		case "days": months = number / 30; break;
+		case "weeks": months = number / 4.345; break;
+		case "months": months = number; break;
+		case "years": months = number * 12; break;
 	}
 
-	if (!goal || goal <= 0 || !months || months <= 0) return;
-
 	const years = months / 12;
+	const includeInterestTax = document.getElementById("includeInterestTax").checked;
+	const interest = includeInterestTax ? parseFloat(document.getElementById("interestRate").value) || 0 : 0;
+	const tax = includeInterestTax ? parseFloat(document.getElementById("taxRate").value) || 0 : 0;
 	const netInterest = interest * (1 - tax / 100);
 	const growthFactor = 1 + (netInterest / 100) * years;
 
@@ -76,8 +126,8 @@ function calculateSavings() {
 	container.innerHTML = "";
 
 	Object.entries(frequencies).forEach(([label, freq]) => {
-		const monthsPerDeposit = 12 / freq;
-		if (monthsPerDeposit > months) return; // skip if deposit interval exceeds timeframe
+		const periodMonths = 12 / freq;
+		if (periodMonths > months) return; // skip frequencies exceeding chosen timeframe
 		const periods = years * freq;
 		const deposit = goal / periods / growthFactor;
 		const p = document.createElement("p");
@@ -88,9 +138,3 @@ function calculateSavings() {
 	document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
 	document.getElementById("result").style.display = "block";
 }
-
-// ===== Init =====
-document.addEventListener("DOMContentLoaded", () => {
-	populateCountries();
-	document.getElementById("calculateBtn").addEventListener("click", calculateSavings);
-});
