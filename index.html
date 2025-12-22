@@ -13,13 +13,8 @@
 		<p class="subtitle">We will save you from calculation hell.</p>
 
 		<div class="card">
-			<!-- Country Selector at Top -->
-			<label for="country">Select Your Country</label>
-			<select id="country">
-				<option value="">Detecting...</option>
-			</select>
 
-			<label for="goalAmount">Goal Amount (₱)</label>
+			<label for="goalAmount">Goal Amount</label>
 			<input type="number" id="goalAmount" placeholder="e.g. 50000" />
 
 			<label for="timeframe">Timeframe</label>
@@ -41,11 +36,26 @@
 				<option value="4">Quarterly</option>
 			</select>
 
-			<label for="interestRate">Interest Rate (optional)</label>
-			<input type="number" id="interestRate" placeholder="e.g. 5 (for 5%)" />
+			<!-- Advanced Options Toggle -->
+			<button type="button" class="advanced-toggle" id="advancedToggle">
+				Advanced assumptions
+			</button>
 
-			<label for="taxRate">Tax Rate (optional)</label>
-			<input type="number" id="taxRate" placeholder="e.g. 10 (for 10%)" />
+			<!-- Advanced Section -->
+			<div id="advancedSection" style="display:none;">
+
+				<label for="country">Country (auto-detected)</label>
+				<select id="country">
+					<option value="">Detecting...</option>
+				</select>
+
+				<label for="interestRate">Interest Rate (%)</label>
+				<input type="number" id="interestRate" placeholder="Auto-filled, editable" />
+
+				<label for="taxRate">Tax on Interest (%)</label>
+				<input type="number" id="taxRate" placeholder="Auto-filled, editable" />
+
+			</div>
 
 			<button id="calculateBtn">Calculate</button>
 		</div>
@@ -65,5 +75,11 @@
 	</div>
 
 	<script src="script.js"></script>
+	<script>
+		document.getElementById('advancedToggle').addEventListener('click', function () {
+			const section = document.getElementById('advancedSection');
+			section.style.display = section.style.display === 'none' ? 'block' : 'none';
+		});
+	</script>
 </body>
 </html>

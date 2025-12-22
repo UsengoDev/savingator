@@ -64,6 +64,31 @@ button:hover {
 	background: #218838;
 }
 
+/* Advanced toggle */
+.advanced-toggle {
+	background: none;
+	color: #555;
+	border: none;
+	padding: 8px 0;
+	margin-bottom: 10px;
+	font-size: 0.9rem;
+	cursor: pointer;
+	text-align: left;
+}
+
+.advanced-toggle:hover {
+	color: #000;
+	text-decoration: underline;
+}
+
+/* Advanced section */
+#advancedSection {
+	background: #F4F6F8;
+	padding: 12px;
+	border-radius: 6px;
+	margin-bottom: 14px;
+}
+
 .result-card {
 	background: #fff;
 	padding: 18px;
