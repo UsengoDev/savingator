@@ -54,6 +54,13 @@ body {
     background: #fff;
     box-shadow: 0px 0px 4px #ababab;
 }
+.goal_calculator_total{
+    background: #e5f0f5;
+    padding: 12px;
+    font-size: 2rem;
+    text-align: center;
+    border-radius: 8px;
+}
 .container {
 	max-width: 480px;
 	margin: 40px auto;
