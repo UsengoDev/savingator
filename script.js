@@ -270,6 +270,29 @@ document.addEventListener("DOMContentLoaded", () => {
 	document.getElementById("taxRate").addEventListener("input", calculateSavings);
 });
 
+// ===== Tab Switching =====
+const tab1 = document.querySelector(".tab1");
+const tab2 = document.querySelector(".tab2");
+const goalCalculator = document.querySelector(".savings_goal_calculator");
+const growthCalculator = document.querySelector(".savings_growth_calculator");
+
+// Default: show goal, hide growth
+goalCalculator.style.display = "block";
+growthCalculator.style.display = "none";
+
+tab1.addEventListener("click", () => {
+	tab1.classList.add("active");
+	tab2.classList.remove("active");
+	goalCalculator.style.display = "block";
+	growthCalculator.style.display = "none";
+});
+
+tab2.addEventListener("click", () => {
+	tab2.classList.add("active");
+	tab1.classList.remove("active");
+	goalCalculator.style.display = "none";
+	growthCalculator.style.display = "block";
+});
 
 // ===== Growth Calculator =====
 function calculateGrowth() {
