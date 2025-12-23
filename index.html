@@ -1,143 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1JCVPVZWZQ"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-1JCVPVZWZQ');
-	</script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1JCVPVZWZQ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1875099509241204"
-		crossorigin="anonymous"></script>
-
+      gtag('config', 'G-1JCVPVZWZQ');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1875099509241204"
+     crossorigin="anonymous"></script>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Savingator - Free Online Savings Calculator</title>
 	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    
+    <div id="header">
+        <a href="/" class="logo_container">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+              <rect width="64" height="64" fill="none"></rect>
+              <rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#d79110"></rect>
+              <rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#e9ad3e"></rect>
+              <rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#f5d295"></rect>
+              <text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">S</text>
+            </svg>
 
-	<div id="header">
-		<a href="/" class="logo_container">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-				<rect width="64" height="64" fill="none"></rect>
-				<rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#d79110"></rect>
-				<rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#e9ad3e"></rect>
-				<rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#f5d295"></rect>
-				<text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">S</text>
-			</svg>
-			<div class="logo_text_container">Savingator</div>
-		</a>
-		<div class="subtitle_sub">We'll save you from calculation hell.</div>
-	</div>
-
+            <div class="logo_text_container">Savingator</div>
+        </a>
+        <div class="subtitle_sub">We'll save you from calculation hell.</div>
+    </div>
 	<div class="container">
 		<div class="card">
+            <div class="subtitle">
+                <div class="subtitle_main">Savings Calculator</div>
+            </div>
+			<label for="goalAmount">Goal Amount</label>
+			<input type="number" id="goalAmount" placeholder="" />
 
-			<div class="subtitle">
-				<div class="subtitle_main">Savings Calculator</div>
+			<label for="timeframe">Timeframe</label>
+			<div class="timeframe-wrapper">
+				<input type="number" id="timeframeNumber" list="timeframeOptions" />
+				<datalist id="timeframeOptions">
+					<option value="1"></option>
+					<option value="3"></option>
+					<option value="6"></option>
+					<option value="12"></option>
+					<option value="24"></option>
+					<option value="36"></option>
+				</datalist>
+
+				<select id="timeframeUnit">
+					<option value="days">Days</option>
+					<option value="weeks">Weeks</option>
+					<option value="months" selected>Months</option>
+					<option value="years">Years</option>
+				</select>
 			</div>
 
-			<!-- ==============================
-			     TABS
-			============================== -->
-			<div class="card-tabs">
-				<button class="tab active" data-tab="goal">Goal-Based</button>
-				<button class="tab" data-tab="accumulation">Accumulation</button>
+			<!-- Checkbox with label acting as toggle -->
+			<div class="checkbox-wrapper">
+				<input type="checkbox" id="includeInterestTax" />
+				<label class="checkbox-inline" for="includeInterestTax">Include Tax/Interest</label>
 			</div>
 
-			<!-- ==============================
-			     GOAL-BASED CALCULATOR
-			============================== -->
-			<div class="tab-content active" id="tab-goal">
+			<div id="advancedSection" style="display:none;">
 
-				<label for="goalAmount">Goal Amount</label>
-				<input type="number" id="goalAmount" />
-
-				<label>Timeframe</label>
-				<div class="timeframe-wrapper">
-					<input type="number" id="timeframeNumber" />
-					<select id="timeframeUnit">
-						<option value="days">Days</option>
-						<option value="weeks">Weeks</option>
-						<option value="months" selected>Months</option>
-						<option value="years">Years</option>
-					</select>
-				</div>
-
-				<div class="checkbox-wrapper">
-					<input type="checkbox" id="includeInterestTax" />
-					<label class="checkbox-inline">Include Tax/Interest</label>
-				</div>
-
-				<div id="advancedSection" style="display:none;">
-					<label for="country">Country (auto-detected)</label>
-					<select id="country">
-						<option value="">Detecting...</option>
-					</select>
-
-					<label for="interestRate">Interest Rate (%)</label>
-					<input type="number" id="interestRate" value="0" />
-
-					<label for="taxRate">Tax on Interest (%)</label>
-					<input type="number" id="taxRate" value="0" />
-				</div>
-
-				<button id="calculateBtn">Calculate</button>
-
-			</div>
-
-			<!-- ==============================
-			     ACCUMULATION CALCULATOR
-			============================== -->
-			<div class="tab-content" id="tab-accumulation">
-
-				<label>Amount Saved Per Period</label>
-				<input type="number" id="saveAmount" />
-
-				<label>Savings Frequency</label>
-				<select id="accFrequency">
-					<option value="daily">Daily</option>
-					<option value="weekly">Weekly</option>
-					<option value="monthly" selected>Monthly</option>
-					<option value="yearly">Yearly</option>
+				<label for="country">Country (auto-detected)</label>
+				<select id="country">
+					<option value="">Detecting...</option>
 				</select>
 
-				<label>Duration</label>
-				<div class="timeframe-wrapper">
-					<input type="number" id="accDuration" />
-					<select id="accUnit">
-						<option value="days">Days</option>
-						<option value="weeks">Weeks</option>
-						<option value="months" selected>Months</option>
-						<option value="years">Years</option>
-					</select>
-				</div>
+				<label for="interestRate">Interest Rate (%) (Adjust as needed.)</label>
+				<input type="number" id="interestRate" placeholder="Auto-filled, editable" value="0" />
 
-				<button id="calculateAccumulation">Calculate</button>
+				<label for="taxRate">Tax on Interest (%) <br />(Rough estimate based on online data. You can input a more accurate tax percentage.)</label>
+				<input type="number" id="taxRate" placeholder="Auto-filled, editable" value="0" />
 
 			</div>
 
+			<button id="calculateBtn">Calculate</button>
 		</div>
 
 		<div id="result" class="result-card" style="display:none;">
 			<h2>Results</h2>
 			<div id="frequencyResults"></div>
-			<p class="result-label">Total:</p>
+			<p class="result-label">Total in chosen timeframe:</p>
 			<p class="result-value" id="totalSaved"></p>
 		</div>
+
 	</div>
 
-	<!-- ==============================
-	     OTHER TOOLS + FOOTER
-	     (UNCHANGED)
-	============================== -->
-	<!-- Your entire other tools section stays EXACTLY as-is -->
-	<!-- Footer stays EXACTLY as-is -->
+    <div class="our_other_tools">
+        <div class="other_tools_title">Try our other online tools</div>
+        <div class="other_tools_container">
+            <a href="https://pictocrop.com" class="imgwash_tool online_tool_container">
+                <div class="pictocrop_logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                      <!-- Transparent background -->
+                      <rect width="64" height="64" fill="none"></rect>
 
+                      <!-- Staggered rectangles -->
+                      <rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#8c00ff"></rect>
+                      <rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#a464ff"></rect>
+                      <rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#aa91ff"></rect>
+
+                      <!-- Letter P inside top rectangle -->
+                      <text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">P</text>
+                    </svg>
+                </div>
+                <div class="pictocrop_name">Pictocrop</div>
+                <div class="pictocrop_description tool_description">Photo Cropping Tool</div>
+            </a>
+            <a href="https://photiny.com" class="photiny_tool online_tool_container">
+                <div class="photiny_logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                  <!-- Transparent background -->
+                  <rect width="64" height="64" fill="none"></rect>
+
+                  <!-- Staggered rectangles -->
+                  <rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#4A7CFF"></rect>
+                  <rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#6FA3FF"></rect>
+                  <rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#91C0FF"></rect>
+
+                  <!-- Letter P inside top rectangle -->
+                  <text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">P</text>
+                </svg>
+                </div>
+                <div class="photiny_name">Photiny</div>
+                <div class="photiny_description tool_description">
+                    Image Compressor & Converter
+                </div>
+            </a>
+            
+            <a href="https://imgwash.com" class="imgwash_tool online_tool_container">
+                <div class="imgwash_logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                      <rect width="64" height="64" fill="none"></rect>
+                      <rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#008100"></rect>
+                      <rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#429542"></rect>
+                      <rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#84b384"></rect>
+                      <text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">I</text>
+                    </svg>
+                </div>
+                <div class="imgwash_name">ImgWash</div>
+                <div class="imgwash_description tool_description">Image Metadata Remover</div>
+            </a>
+            
+            <a href="https://pdfatom.com" class="pdfatom_tool online_tool_container">
+                <div class="pdfatom_logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+                      <rect width="64" height="64" fill="none"></rect>
+                      <rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#8c00ff" style="fill: #cf2222;"></rect>
+                      <rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#a464ff" style="fill: #f56464;"></rect>
+                      <rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#aa91ff" style="fill: #f38484;"></rect>
+                      <text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">P</text>
+                    </svg>
+                </div>
+                <div class="pdfatom_name">PDFatom</div>
+                <div class="pdfatom_description tool_description">
+                    PDF Compressor Tool
+                </div>
+            </a>
+        </div>
+        
+        <div class="other_tools_title">Need more tools? Check out our sister site.</div>
+        <a href="https://usengo.com" class="online_tool_container usengo_tool_container">
+            <div class="usengo_site_name">Usengo.com</div>
+            <div class="usengo_site_description">Simple, reliable tools that work instantly.</div>
+        </a>
+        
+    </div>
+    
+    <div id="footer">
+        <div class="footer_links">
+            <a href="/terms/">Terms</a>
+            <a href="/privacy/">Privacy</a>
+            <a href="/about/">About</a>
+            <a href="/contact/">Contact</a>
+        </div>
+        <div class="copyright">&copy; 2025 Savingator. All rights reserved.</div>
+    </div>
+    
 	<script src="script.js"></script>
 </body>
 </html>
