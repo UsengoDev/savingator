@@ -58,9 +58,12 @@ h1 {
 }
 
 div.subtitle {
-	text-align: center;
-	color: #555;
-	margin-bottom: 24px;
+    color: #555;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
 }
 
 /* ==============================
