@@ -48,6 +48,7 @@ body {
     border-top-right-radius: 16px;
     background: #dbdbdb;
     box-shadow: 0px 0px 2px #cfcfcf;
+    cursor:pointer;
 }
 .selected_tab{
     background: #fff;
