@@ -270,66 +270,75 @@ document.addEventListener("DOMContentLoaded", () => {
 	document.getElementById("taxRate").addEventListener("input", calculateSavings);
 });
 
-// ===== Tab Switching =====
-const tab1 = document.querySelector(".tab1");
-const tab2 = document.querySelector(".tab2");
-const goalCalculator = document.querySelector(".savings_goal_calculator");
-const growthCalculator = document.querySelector(".savings_growth_calculator");
-
-// Default: show goal, hide growth
-goalCalculator.style.display = "block";
-growthCalculator.style.display = "none";
-
-tab1.addEventListener("click", () => {
-	tab1.classList.add("active");
-	tab2.classList.remove("active");
-	goalCalculator.style.display = "block";
-	growthCalculator.style.display = "none";
-});
-
-tab2.addEventListener("click", () => {
-	tab2.classList.add("active");
-	tab1.classList.remove("active");
-	goalCalculator.style.display = "none";
-	growthCalculator.style.display = "block";
-});
-
 // ===== Growth Calculator =====
 function calculateGrowth() {
 	const amount = parseFloat(document.getElementById("amount2").value);
-	const number = parseFloat(document.getElementById("timeframeNumber2").value);
-	const unit = document.getElementById("timeframeUnit2").value;
+	const timeframeNumber = parseFloat(document.getElementById("timeframeNumber2").value);
+	const timeframeUnit = document.getElementById("timeframeUnit2").value;
+	const frequency = document.getElementById("frequency2").value;
 
-	if (!amount || amount <= 0 || !number || number <= 0) {
-		document.getElementById("growthResult2").innerText = "Please enter valid values.";
+	if (!amount || amount <= 0 || !timeframeNumber || timeframeNumber <= 0) {
+		document.getElementById("growthResult2").innerText = "Please enter valid numbers.";
 		return;
 	}
 
-	let multiplier;
-	let unitLabel;
-
-	switch (unit) {
-		case "days":
-			multiplier = 1; // 1 day = 1 day
-			unitLabel = number === 1 ? "day" : "days";
-			break;
-		case "weeks":
-			multiplier = 7; // 1 week = 7 days
-			unitLabel = number === 1 ? "week" : "weeks";
-			break;
-		case "months":
-			multiplier = 30; // 1 month ≈ 30 days
-			unitLabel = number === 1 ? "month" : "months";
-			break;
-		case "years":
-			multiplier = 365; // 1 year ≈ 365 days
-			unitLabel = number === 1 ? "year" : "years";
-			break;
+	// Convert timeframe to days
+	let totalDays;
+	switch (timeframeUnit) {
+		case "days": totalDays = timeframeNumber; break;
+		case "weeks": totalDays = timeframeNumber * 7; break;
+		case "months": totalDays = timeframeNumber * 30; break; // approximate
+		case "years": totalDays = timeframeNumber * 365; break; // approximate
 	}
 
-	const total = amount * number * multiplier;
+	// Determine number of contributions based on frequency
+	let contributions;
+	switch (frequency) {
+		case "daily": contributions = totalDays; break;
+		case "weekly": contributions = Math.floor(totalDays / 7); break;
+		case "monthly": contributions = Math.floor(totalDays / 30); break;
+		case "yearly": contributions = Math.floor(totalDays / 365); break;
+	}
 
-	document.getElementById("growthResult2").innerText = `Total saved in ${number} ${unitLabel}: ₱${total.toFixed(2)}`;
+	const totalSaved = amount * contributions;
+
+	// Display result
+	let unitLabel;
+	switch (frequency) {
+		case "daily": unitLabel = "day(s)"; break;
+		case "weekly": unitLabel = "week(s)"; break;
+		case "monthly": unitLabel = "month(s)"; break;
+		case "yearly": unitLabel = "year(s)"; break;
+	}
+
+	document.getElementById("growthResult2").innerText = `Saving ₱${amount} every ${unitLabel} for ${timeframeNumber} ${timeframeUnit} will total ₱${totalSaved.toFixed(2)}.`;
 }
 
-document.getElementById("calculateGrowthBtn").addEventListener("click", calculateGrowth);
+// ===== Tab Switching =====
+document.addEventListener("DOMContentLoaded", () => {
+	const tab1 = document.querySelector(".tab1");
+	const tab2 = document.querySelector(".tab2");
+	const goalCalc = document.querySelector(".savings_goal_calculator");
+	const growthCalc = document.querySelector(".savings_growth_calculator");
+
+	// Default: show Goal
+	goalCalc.style.display = "block";
+	growthCalc.style.display = "none";
+
+	tab1.addEventListener("click", () => {
+		goalCalc.style.display = "block";
+		growthCalc.style.display = "none";
+		tab1.classList.add("active");
+		tab2.classList.remove("active");
+	});
+
+	tab2.addEventListener("click", () => {
+		goalCalc.style.display = "none";
+		growthCalc.style.display = "block";
+		tab2.classList.add("active");
+		tab1.classList.remove("active");
+	});
+
+	// Attach growth calculator
+	document.getElementById("calculateGrowthBtn").addEventListener("click", calculateGrowth);
+});
