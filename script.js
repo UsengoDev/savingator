@@ -326,18 +326,22 @@ document.addEventListener("DOMContentLoaded", () => {
 	growthCalc.style.display = "none";
 
 	tab1.addEventListener("click", () => {
-		goalCalc.style.display = "block";
-		growthCalc.style.display = "none";
-		tab1.classList.add("active");
-		tab2.classList.remove("active");
-	});
+        goalCalc.style.display = "block";
+        growthCalc.style.display = "none";
+
+        tab1.classList.add("active", "selected_tab");
+        tab2.classList.remove("active", "selected_tab");
+    });
+
 
 	tab2.addEventListener("click", () => {
-		goalCalc.style.display = "none";
-		growthCalc.style.display = "block";
-		tab2.classList.add("active");
-		tab1.classList.remove("active");
-	});
+        growthCalc.style.display = "block";
+        goalCalc.style.display = "none";
+
+        tab2.classList.add("active", "selected_tab");
+        tab1.classList.remove("active", "selected_tab");
+    });
+
 
 	// Attach growth calculator
 	document.getElementById("calculateGrowthBtn").addEventListener("click", calculateGrowth);
