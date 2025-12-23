@@ -293,13 +293,17 @@ function calculateGrowth() {
 	}
 
 	// Convert frequency to days
-	let frequencyDays;
-	switch (frequency) {
-		case "daily": frequencyDays = 1; break;
-		case "weekly": frequencyDays = 7; break;
-		case "monthly": frequencyDays = 30; break;
-		case "yearly": frequencyDays = 365; break;
-	}
+    let frequencyDays;
+    switch (frequency) {
+        case "daily": frequencyDays = 1; break;
+        case "weekly": frequencyDays = 7; break;
+        case "biweekly": frequencyDays = 14; break;
+        case "monthly": frequencyDays = 30; break;
+        case "bimonthly": frequencyDays = 60; break;
+        case "quarterly": frequencyDays = 90; break;
+        case "yearly": frequencyDays = 365; break;
+    }
+
 
 	// ❗ Guard: frequency longer than timeframe
 	if (frequencyDays > totalDays) {
