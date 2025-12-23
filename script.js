@@ -311,7 +311,7 @@ function calculateGrowth() {
 		case "yearly": unitLabel = "year(s)"; break;
 	}
 
-	document.getElementById("growthResult2").innerText = `Saving ₱${amount} every ${unitLabel} for ${timeframeNumber} ${timeframeUnit} will total ₱${totalSaved.toFixed(2)}.`;
+	document.getElementById("growthResult2").innerText = `Saving ₱${amount} every ${unitLabel} for ${timeframeNumber} ${timeframeUnit} will total ${totalSaved.toFixed(2)}.`;
 }
 
 // ===== Tab Switching =====
