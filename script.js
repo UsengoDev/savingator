@@ -324,8 +324,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	const growthCalc = document.querySelector(".savings_growth_calculator");
 
 	// Default: show Goal
-	goalCalc.style.display = "block";
-	growthCalc.style.display = "none";
+	growthCalc.style.display = "block";
+	goalCalc.style.display = "none";
 
 	tab1.addEventListener("click", () => {
         goalCalc.style.display = "block";
