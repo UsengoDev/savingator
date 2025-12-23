@@ -282,13 +282,29 @@ function calculateGrowth() {
 		return;
 	}
 
-	const total = amount * number;
+	let multiplier;
+	let unitLabel;
 
-	// Proper unit label (singular/plural)
-	let unitLabel = unit;
-	if (number === 1) {
-		unitLabel = unit.slice(0, -1); // remove 's' for singular
+	switch (unit) {
+		case "days":
+			multiplier = 1; // 1 day = 1 day
+			unitLabel = number === 1 ? "day" : "days";
+			break;
+		case "weeks":
+			multiplier = 7; // 1 week = 7 days
+			unitLabel = number === 1 ? "week" : "weeks";
+			break;
+		case "months":
+			multiplier = 30; // 1 month ≈ 30 days
+			unitLabel = number === 1 ? "month" : "months";
+			break;
+		case "years":
+			multiplier = 365; // 1 year ≈ 365 days
+			unitLabel = number === 1 ? "year" : "years";
+			break;
 	}
+
+	const total = amount * number * multiplier;
 
 	document.getElementById("growthResult2").innerText = `Total saved in ${number} ${unitLabel}: ₱${total.toFixed(2)}`;
 }
