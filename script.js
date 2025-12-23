@@ -276,9 +276,10 @@ function calculateGrowth() {
 	const timeframeNumber = parseFloat(document.getElementById("timeframeNumber2").value);
 	const timeframeUnit = document.getElementById("timeframeUnit2").value;
 	const frequency = document.getElementById("frequency2").value;
+	const resultEl = document.getElementById("growthResult2");
 
 	if (!amount || amount <= 0 || !timeframeNumber || timeframeNumber <= 0) {
-		document.getElementById("growthResult2").innerText = "Please enter valid numbers.";
+		resultEl.innerText = "Please enter valid numbers.";
 		return;
 	}
 
@@ -287,32 +288,33 @@ function calculateGrowth() {
 	switch (timeframeUnit) {
 		case "days": totalDays = timeframeNumber; break;
 		case "weeks": totalDays = timeframeNumber * 7; break;
-		case "months": totalDays = timeframeNumber * 30; break; // approximate
-		case "years": totalDays = timeframeNumber * 365; break; // approximate
+		case "months": totalDays = timeframeNumber * 30; break;
+		case "years": totalDays = timeframeNumber * 365; break;
 	}
 
-	// Determine number of contributions based on frequency
-	let contributions;
+	// Convert frequency to days
+	let frequencyDays;
 	switch (frequency) {
-		case "daily": contributions = totalDays; break;
-		case "weekly": contributions = Math.floor(totalDays / 7); break;
-		case "monthly": contributions = Math.floor(totalDays / 30); break;
-		case "yearly": contributions = Math.floor(totalDays / 365); break;
+		case "daily": frequencyDays = 1; break;
+		case "weekly": frequencyDays = 7; break;
+		case "monthly": frequencyDays = 30; break;
+		case "yearly": frequencyDays = 365; break;
 	}
 
+	// ❗ Guard: frequency longer than timeframe
+	if (frequencyDays > totalDays) {
+		resultEl.innerText = "Contribution frequency cannot be longer than the selected timeframe.";
+		return;
+	}
+
+	// Calculate contributions
+	const contributions = Math.floor(totalDays / frequencyDays);
 	const totalSaved = amount * contributions;
 
-	// Display result
-	let unitLabel;
-	switch (frequency) {
-		case "daily": unitLabel = "day(s)"; break;
-		case "weekly": unitLabel = "week(s)"; break;
-		case "monthly": unitLabel = "month(s)"; break;
-		case "yearly": unitLabel = "year(s)"; break;
-	}
-
-	document.getElementById("growthResult2").innerText = `Saving ₱${amount} every ${unitLabel} for ${timeframeNumber} ${timeframeUnit} will total ${totalSaved.toFixed(2)}.`;
+	resultEl.innerText =
+		`Saving ${amount} every ${frequency} for ${timeframeNumber} ${timeframeUnit} will total ${totalSaved}.`;
 }
+
 
 // ===== Tab Switching =====
 document.addEventListener("DOMContentLoaded", () => {
