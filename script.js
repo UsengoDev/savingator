@@ -282,46 +282,15 @@ function calculateGrowth() {
 		return;
 	}
 
-	// Convert timeframe to months
-	let months;
-	switch (unit) {
-		case "days": months = number / 30; break;
-		case "weeks": months = number / 4.345; break;
-		case "months": months = number; break;
-		case "years": months = number * 12; break;
+	const total = amount * number;
+
+	// Proper unit label (singular/plural)
+	let unitLabel = unit;
+	if (number === 1) {
+		unitLabel = unit.slice(0, -1); // remove 's' for singular
 	}
 
-	const years = months / 12;
-
-	// Assume simple growth: each period deposits same amount, grows by interest
-	// We'll use a simple 0% interest unless you want to reuse interest fields
-	const result = amount * (years * 12 / 12); // total saved (no interest for simplicity)
-
-	document.getElementById("growthResult2").innerText = `Total saved in ${number} ${unit}: ₱${result.toFixed(2)}`;
+	document.getElementById("growthResult2").innerText = `Total saved in ${number} ${unitLabel}: ₱${total.toFixed(2)}`;
 }
 
 document.getElementById("calculateGrowthBtn").addEventListener("click", calculateGrowth);
-
-// ===== Tab Switching =====
-const tab1 = document.querySelector(".tab1");
-const tab2 = document.querySelector(".tab2");
-const goalCalculator = document.querySelector(".savings_goal_calculator");
-const growthCalculator = document.querySelector(".savings_growth_calculator");
-
-// Default: show goal, hide growth
-goalCalculator.style.display = "block";
-growthCalculator.style.display = "none";
-
-tab1.addEventListener("click", () => {
-	tab1.classList.add("active");
-	tab2.classList.remove("active");
-	goalCalculator.style.display = "block";
-	growthCalculator.style.display = "none";
-});
-
-tab2.addEventListener("click", () => {
-	tab2.classList.add("active");
-	tab1.classList.remove("active");
-	goalCalculator.style.display = "none";
-	growthCalculator.style.display = "block";
-});
