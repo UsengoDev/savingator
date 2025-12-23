@@ -38,7 +38,10 @@ body {
     max-width:500px;
 }
 .savings_calculator_title{
-    
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 0px 12px 12px;
+    text-align: center;
 }
 .subtitle_main{
     font-weight: 600;
