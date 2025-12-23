@@ -41,11 +41,17 @@ body {
     font-weight: 600;
     font-size: 0.9rem;
     padding: 12px;
-    border: 1px solid black;
+    border: none;
     width: 47%;
     text-align: center;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
+    background: #dbdbdb;
+    box-shadow: 0px 0px 2px #454545;
+}
+.selected_tab{
+    background: #fff;
+    box-shadow: 0px 0px 4px #0e0e0e;
 }
 .container {
 	max-width: 480px;
