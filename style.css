@@ -272,6 +272,9 @@ button:hover {
 .usengo_site_description{
     font-weight:400;
 }
+.savings_growth_calculator{
+    display:none;
+}
 
 @media (max-width: 575.98px) {
     .other_tools_container{
