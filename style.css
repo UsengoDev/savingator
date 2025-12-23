@@ -60,7 +60,9 @@ body {
     user-select: none;
 }
 .tab_subtitle{
-    font-size:0.7rem;
+    font-size: 0.73rem;
+    font-weight: 400;
+    line-height: 19px;
 }
 .selected_tab{
     background: #fff;
