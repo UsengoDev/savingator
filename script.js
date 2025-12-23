@@ -312,7 +312,7 @@ function calculateGrowth() {
 	const totalSaved = amount * contributions;
 
 	resultEl.innerHTML =
-		`Saving ${amount} ${frequency} for ${timeframeNumber} ${timeframeUnit} will total <div class="goal_calculator_total">${totalSaved}.</div>`;
+		`Saving ${amount} ${frequency} for ${timeframeNumber} ${timeframeUnit} will total <div class="goal_calculator_total">${totalSaved}</div>`;
 }
 
 
