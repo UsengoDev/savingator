@@ -311,8 +311,8 @@ function calculateGrowth() {
 	const contributions = Math.floor(totalDays / frequencyDays);
 	const totalSaved = amount * contributions;
 
-	resultEl.innerText =
-		`Saving ${amount} every ${frequency} for ${timeframeNumber} ${timeframeUnit} will total ${totalSaved}.`;
+	resultEl.innerHTML =
+		`Saving ${amount} every ${frequency} for ${timeframeNumber} ${timeframeUnit} will total <div class="goal_calculator_total">${totalSaved}.</div>`;
 }
 
 
