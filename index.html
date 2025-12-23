@@ -1,80 +1,143 @@
-<div class="card">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-1JCVPVZWZQ"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-1JCVPVZWZQ');
+	</script>
 
-	<div class="card-tabs">
-		<button class="tab active" data-tab="goal">Goal</button>
-		<button class="tab" data-tab="accumulation">Accumulation</button>
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1875099509241204"
+		crossorigin="anonymous"></script>
+
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Savingator - Free Online Savings Calculator</title>
+	<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+	<div id="header">
+		<a href="/" class="logo_container">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+				<rect width="64" height="64" fill="none"></rect>
+				<rect x="12" y="14" width="40" height="36" rx="4" ry="4" fill="#d79110"></rect>
+				<rect x="16" y="10" width="32" height="36" rx="4" ry="4" fill="#e9ad3e"></rect>
+				<rect x="20" y="6" width="24" height="36" rx="4" ry="4" fill="#f5d295"></rect>
+				<text x="32" y="30" font-size="20" font-family="Arial, sans-serif" font-weight="bold" fill="#fff" text-anchor="middle">S</text>
+			</svg>
+			<div class="logo_text_container">Savingator</div>
+		</a>
+		<div class="subtitle_sub">We'll save you from calculation hell.</div>
 	</div>
 
-	<!-- GOAL CALCULATOR (existing, unchanged) -->
-	<div class="tab-content active" id="tab-goal">
+	<div class="container">
+		<div class="card">
 
-		<div class="subtitle">
-			<div class="subtitle_main">Savings Goal Calculator</div>
+			<div class="subtitle">
+				<div class="subtitle_main">Savings Calculator</div>
+			</div>
+
+			<!-- ==============================
+			     TABS
+			============================== -->
+			<div class="card-tabs">
+				<button class="tab active" data-tab="goal">Goal-Based</button>
+				<button class="tab" data-tab="accumulation">Accumulation</button>
+			</div>
+
+			<!-- ==============================
+			     GOAL-BASED CALCULATOR
+			============================== -->
+			<div class="tab-content active" id="tab-goal">
+
+				<label for="goalAmount">Goal Amount</label>
+				<input type="number" id="goalAmount" />
+
+				<label>Timeframe</label>
+				<div class="timeframe-wrapper">
+					<input type="number" id="timeframeNumber" />
+					<select id="timeframeUnit">
+						<option value="days">Days</option>
+						<option value="weeks">Weeks</option>
+						<option value="months" selected>Months</option>
+						<option value="years">Years</option>
+					</select>
+				</div>
+
+				<div class="checkbox-wrapper">
+					<input type="checkbox" id="includeInterestTax" />
+					<label class="checkbox-inline">Include Tax/Interest</label>
+				</div>
+
+				<div id="advancedSection" style="display:none;">
+					<label for="country">Country (auto-detected)</label>
+					<select id="country">
+						<option value="">Detecting...</option>
+					</select>
+
+					<label for="interestRate">Interest Rate (%)</label>
+					<input type="number" id="interestRate" value="0" />
+
+					<label for="taxRate">Tax on Interest (%)</label>
+					<input type="number" id="taxRate" value="0" />
+				</div>
+
+				<button id="calculateBtn">Calculate</button>
+
+			</div>
+
+			<!-- ==============================
+			     ACCUMULATION CALCULATOR
+			============================== -->
+			<div class="tab-content" id="tab-accumulation">
+
+				<label>Amount Saved Per Period</label>
+				<input type="number" id="saveAmount" />
+
+				<label>Savings Frequency</label>
+				<select id="accFrequency">
+					<option value="daily">Daily</option>
+					<option value="weekly">Weekly</option>
+					<option value="monthly" selected>Monthly</option>
+					<option value="yearly">Yearly</option>
+				</select>
+
+				<label>Duration</label>
+				<div class="timeframe-wrapper">
+					<input type="number" id="accDuration" />
+					<select id="accUnit">
+						<option value="days">Days</option>
+						<option value="weeks">Weeks</option>
+						<option value="months" selected>Months</option>
+						<option value="years">Years</option>
+					</select>
+				</div>
+
+				<button id="calculateAccumulation">Calculate</button>
+
+			</div>
+
 		</div>
 
-		<label for="goalAmount">Goal Amount</label>
-		<input type="number" id="goalAmount" />
-
-		<label for="timeframe">Timeframe</label>
-		<div class="timeframe-wrapper">
-			<input type="number" id="timeframeNumber" />
-			<select id="timeframeUnit">
-				<option value="days">Days</option>
-				<option value="weeks">Weeks</option>
-				<option value="months" selected>Months</option>
-				<option value="years">Years</option>
-			</select>
+		<div id="result" class="result-card" style="display:none;">
+			<h2>Results</h2>
+			<div id="frequencyResults"></div>
+			<p class="result-label">Total:</p>
+			<p class="result-value" id="totalSaved"></p>
 		</div>
-
-		<div class="checkbox-wrapper">
-			<input type="checkbox" id="includeInterestTax" />
-			<label class="checkbox-inline" for="includeInterestTax">Include Tax/Interest</label>
-		</div>
-
-		<div id="advancedSection" style="display:none;">
-			<label for="country">Country (auto-detected)</label>
-			<select id="country"></select>
-
-			<label for="interestRate">Interest Rate (%)</label>
-			<input type="number" id="interestRate" value="0" />
-
-			<label for="taxRate">Tax on Interest (%)</label>
-			<input type="number" id="taxRate" value="0" />
-		</div>
-
-		<button id="calculateBtn">Calculate</button>
 	</div>
 
-	<!-- ACCUMULATION CALCULATOR -->
-	<div class="tab-content" id="tab-accumulation">
+	<!-- ==============================
+	     OTHER TOOLS + FOOTER
+	     (UNCHANGED)
+	============================== -->
+	<!-- Your entire other tools section stays EXACTLY as-is -->
+	<!-- Footer stays EXACTLY as-is -->
 
-		<div class="subtitle">
-			<div class="subtitle_main">Savings Accumulation Calculator</div>
-		</div>
-
-		<label for="saveAmount">Amount Saved Per Period</label>
-		<input type="number" id="saveAmount" />
-
-		<label for="accFrequency">Saving Frequency</label>
-		<select id="accFrequency">
-			<option value="daily">Daily</option>
-			<option value="weekly">Weekly</option>
-			<option value="monthly" selected>Monthly</option>
-			<option value="yearly">Yearly</option>
-		</select>
-
-		<label for="accDuration">Duration</label>
-		<div class="timeframe-wrapper">
-			<input type="number" id="accDuration" />
-			<select id="accUnit">
-				<option value="days">Days</option>
-				<option value="weeks">Weeks</option>
-				<option value="months">Months</option>
-				<option value="years">Years</option>
-			</select>
-		</div>
-
-		<button id="calculateAccumulation">Calculate</button>
-	</div>
-
-</div>
+	<script src="script.js"></script>
+</body>
+</html>
