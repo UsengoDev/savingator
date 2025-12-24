@@ -233,7 +233,7 @@ function calculateSavings() {
 			deposits[deposits.length - 1] += roundingDiff;
 
 			const p = document.createElement("p");
-			p.innerHTML = `Save <strong>${label}</strong>: ₱${rawPerPeriod.toFixed(2)}`;
+			p.innerHTML = `Save <strong>${label}</strong>: ${rawPerPeriod.toFixed(2)}`;
 			container.appendChild(p);
 		});
 
