@@ -237,7 +237,7 @@ function calculateSavings() {
 			container.appendChild(p);
 		});
 
-		document.getElementById("totalSaved").innerText = `₱${goal.toFixed(2)}`;
+		document.getElementById("totalSaved").innerText = `${goal.toFixed(2)}`;
 		resultCard.classList.add("show");
 	}, 150);
 }
