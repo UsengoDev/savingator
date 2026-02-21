@@ -316,6 +316,12 @@ button:hover {
 .savings_growth_calculator{
     display:none;
 }
+.newbar{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+}
 
 @media (max-width: 575.98px) {
     .other_tools_container{
