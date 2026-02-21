@@ -322,6 +322,12 @@ button:hover {
     align-items:center;
     text-align: center;
 }
+.newbar_desktop{
+    display:block;
+}
+.newbar_mobile{
+    display:none;
+}
 
 
 @media (max-width: 575.98px) {
@@ -340,5 +346,11 @@ button:hover {
     .newbar img{
         min-width:unset !important;
         max-width:90vw !important;
+    }
+    .newbar_desktop{
+        display:none;
+    }
+    .newbar_mobile{
+        display:block;
     }
 }
