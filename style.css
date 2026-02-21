@@ -323,6 +323,7 @@ button:hover {
     text-align: center;
 }
 
+
 @media (max-width: 575.98px) {
     .other_tools_container{
         flex-direction:column;
@@ -334,5 +335,10 @@ button:hover {
     .other_tools_title{
         text-align: center;
         line-height: 1.85rem;
+    }
+    
+    .newbar img{
+        min-width:unset !important;
+        max-width:90vw !important;
     }
 }
