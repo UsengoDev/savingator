@@ -335,11 +335,14 @@ button:hover {
     text-align: center;
 }
 #kofi_link_btn{
-    width:100px;
-    padding:15px;
-    border-radius:25px;
-    background:orange;
-    color:white;
+    width: 150px;
+    padding: 15px;
+    border-radius: 25px;
+    background: linear-gradient(63deg, #ffc967, #55b52e);
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    text-shadow: 1px 1px 3px #3f5c65;
 }
 @media (max-width: 575.98px) {
     .other_tools_container{
