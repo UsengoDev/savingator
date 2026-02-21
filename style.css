@@ -328,8 +328,19 @@ button:hover {
 .newbar_mobile{
     display:none;
 }
-
-
+.kofi_div{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    text-align: center;
+}
+#kofi_link_btn{
+    width:100px;
+    padding:15px;
+    border-radius:25px;
+    background:orange;
+    color:white;
+}
 @media (max-width: 575.98px) {
     .other_tools_container{
         flex-direction:column;
